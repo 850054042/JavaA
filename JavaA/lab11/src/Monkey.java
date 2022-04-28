@@ -1,2 +1,5 @@
-package PACKAGE_NAME;public class Monkey {
+public class Monkey extends Animal{
+    public void speak(){
+        System.out.println("aaaa");
+    }
 }

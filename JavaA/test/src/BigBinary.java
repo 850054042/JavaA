@@ -61,16 +61,13 @@ public class BigBinary {
             StringBuilder str1 = bigBinary.align(length);
             StringBuilder str2 = this.align(length);
             int add = 0;
-            for(int i = length;i >= 1;i--){
+            add = str1.charAt(length - 1) - 48 & str2.charAt(length - 1) - 48;
+            result.insert(0,(str1.charAt(length - 1) - 48) ^ (str2.charAt(length - 1) - 48));
+            for(int i = length - 1;i >= 1;i--){
                 int num1 = str1.charAt(i - 1) - 48;
                 int num2 = str2.charAt(i - 1) - 48;
-                if(i == length){
-                    add = num1 & num2;
-                    result.insert(0,num1 ^ num2);
-                }else{
-                    result.insert(0,num1 ^ num2 ^ add);
-                    add = (num1 & num2) | (num1 & add) | (num2 & add);
-                }
+                result.insert(0,num1 ^ num2 ^ add);
+                add = (num1 & num2) | (num1 & add) | (num2 & add);
             }
             if(add != 0)
                 result.insert(0,1);
@@ -103,28 +100,24 @@ public class BigBinary {
             int add = 0;
             StringBuilder result = new StringBuilder();
             StringBuilder b1 = new StringBuilder();
-            for(int i = length - 1;i >= 0;i--){
+            b1.insert(0,abs(b.charAt(length - 1) - 49) ^ 1);
+            add = abs(b.charAt(length - 1) - 49) & 1;
+            for(int i = length - 2;i >= 0;i--){
                 int bi = abs(b.charAt(i) - 49);
-                if(i == length - 1){
-                    b1.insert(0,bi ^ 1);
-                    add = bi & 1;
-                }else{
-                    b1.insert(0, (0 ^ bi) ^ add);
-                    add = bi & add;
-                }
+                b1.insert(0, (0 ^ bi) ^ add);
+                add = bi & add;
             }
             b1.insert(0,1 ^ add);
             a.insert(0,0);
-            for(int i = length;i >= 0;i--){
+            add = b1.charAt(length) - 48 & a.charAt(length) - 48;
+            result.insert(0, b1.charAt(length) - 48 ^ a.charAt(length) - 48);
+            for(int i = length - 1;i >= 0;i--){
                 int bn = a.charAt(i) - 48;
                 int sn = b1.charAt(i) - 48;
-                if(i == length){
-                    add = sn & bn;
-                    result.insert(0, sn ^ bn);
-                }else{
-                    result.insert (0,sn ^ bn ^ add);
-                    add = (sn & bn) | (add & sn) | (bn & add);
-                }
+                add = sn & bn;
+                result.insert(0, sn ^ bn);
+                result.insert (0,sn ^ bn ^ add);
+                add = (sn & bn) | (add & sn) | (bn & add);
             }
             while(result.charAt(0) == '0'){
                 result.deleteCharAt(0);
