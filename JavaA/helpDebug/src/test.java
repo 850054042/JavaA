@@ -1,9 +1,13 @@
+import java.util.ArrayList;
+
 public class test {
     public static void main(String[] args) {
-        int a = 4;
-        int b = 5;
-        float b1 = b;
-        float c = a/b1;
-        System.out.println(c);
+        ArrayList<BigBinary> bigBinaries = new ArrayList<>();
+        bigBinaries.add(new BigBinary(new int[]{1,1,1},true));
+        bigBinaries.add(new BigBinary(new int[]{1,1,1},false));
+        ArrayList<BigBinary> bigBinaries1 = bigBinaries;
+        bigBinaries1.remove(0);
+        for(BigBinary bigBinary:bigBinaries)
+            System.out.println(bigBinary);
     }
 }

@@ -28,6 +28,8 @@ public class Product {
         for(int rating : ratings){
             sum += rating;
         }
+        if(sum == 0)
+            return 0;
         float avg = sum/size;
         return avg;
     }
