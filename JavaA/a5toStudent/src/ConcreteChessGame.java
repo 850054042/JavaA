@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -170,11 +172,114 @@ public class ConcreteChessGame implements ChessGame{
 
     @Override
     public List<ChessboardPoint> getCanMovePoints(ChessboardPoint source) {
-        return null;
+        int x = source.getX();
+        int y = source.getY();
+        if(chessComponents[x][y].name != '_'){
+            ChessComponent chess = chessComponents[x][y];
+            List<ChessboardPoint> chessboardPoints = new ArrayList<>(chessComponents[x][y].canMoveTo());
+            if(chess.name == '_')
+                return chessboardPoints;
+            if(Character.toUpperCase(chess.name) == 'P'){
+                List<ChessboardPoint> toDelete = new ArrayList<>();
+                for(ChessboardPoint chessboardPoint : chessboardPoints){
+                    int targetX = chessboardPoint.getX();
+                    int targetY = chessboardPoint.getY();
+                    if(chessboardPoint.getY() != y){
+                        if(!chess.isOpposite(chessComponents[targetX][targetY])){
+                            toDelete.add(chessboardPoint);
+                        }
+                    }
+                    else{
+                        if(chessComponents[targetX][targetY].name != '_'){
+                            toDelete.add(chessboardPoint);
+                        }
+                    }
+                }
+                for(ChessboardPoint chessboardPoint : toDelete){
+                    chessboardPoints.remove(chessboardPoint);
+                }
+                chessboardPoints.sort(new Comparator<ChessboardPoint>() {
+                    @Override
+                    public int compare(ChessboardPoint o1, ChessboardPoint o2) {
+                        return o1.getX() == o2.getX() ? new Integer(o1.getY()).compareTo(new Integer(o2.getY())):new Integer(o1.getX()).compareTo(new Integer(o2.getX()));
+                    }
+                });
+                return chessboardPoints;
+            }
+            if(Character.toUpperCase(chess.name) == 'B' || Character.toUpperCase(chess.name) == 'Q' || Character.toUpperCase(chess.name) == 'R'){
+                List<ChessboardPoint> toDelete = new ArrayList<>();
+                boolean blocked = false;
+                for(ChessboardPoint chessboardPoint : chessboardPoints){
+                    int targetX = chessboardPoint.getX();
+                    int targetY = chessboardPoint.getY();
+                    if(targetX == x && targetY == y){
+                        blocked = false;
+                        toDelete.add(chessboardPoint);
+                        continue;
+                    }
+                    if(blocked == true){
+                        toDelete.add(chessboardPoint);
+                        continue;
+                    }
+                    if(chessComponents[targetX][targetY].name != '_'){
+                        if(chess.isOpposite(chessComponents[targetX][targetY])){
+                            blocked = true;
+                        }
+                        else{
+                            blocked = true;
+                            toDelete.add(chessboardPoint);
+                        }
+                    }
+                }
+                for(ChessboardPoint chessboardPoint : toDelete){
+                    chessboardPoints.remove(chessboardPoint);
+                }
+                chessboardPoints.sort(new Comparator<ChessboardPoint>() {
+                    @Override
+                    public int compare(ChessboardPoint o1, ChessboardPoint o2) {
+                        return o1.getX() == o2.getX() ? new Integer(o1.getY()).compareTo(new Integer(o2.getY())):new Integer(o1.getX()).compareTo(new Integer(o2.getX()));
+                    }
+                });
+                return chessboardPoints;
+            }
+            if(Character.toUpperCase(chess.name) == 'K' || Character.toUpperCase(chess.name) == 'N'){
+                List<ChessboardPoint> toDelete = new ArrayList<>();
+                for(ChessboardPoint chessboardPoint : chessboardPoints){
+                    int targetX = chessboardPoint.getX();
+                    int targetY = chessboardPoint.getY();
+                    if(chessComponents[targetX][targetY].name != '_'){
+                        if(!chess.isOpposite(chessComponents[targetX][targetY])){
+                            toDelete.add(chessboardPoint);
+                        }
+                    }
+                }
+                for(ChessboardPoint chessboardPoint : toDelete){
+                    chessboardPoints.remove(chessboardPoint);
+                }
+                chessboardPoints.sort(new Comparator<ChessboardPoint>() {
+                    @Override
+                    public int compare(ChessboardPoint o1, ChessboardPoint o2) {
+                        return o1.getX() == o2.getX() ? new Integer(o1.getY()).compareTo(new Integer(o2.getY())):new Integer(o1.getX()).compareTo(new Integer(o2.getX()));
+                    }
+                });
+                return chessboardPoints;
+            }
+        }
+        return new ArrayList<>();
     }
 
     @Override
     public boolean moveChess(int sourceX, int sourceY, int targetX, int targetY) {
+        boolean canMove = false;
+        if(getCanMovePoints(new ChessboardPoint(sourceX,sourceY)).contains(new ChessboardPoint(targetX,targetY)))
+            canMove = true;
+        if(canMove){
+            chessComponents[targetX][targetY] = chessComponents[sourceX][sourceY];
+            chessComponents[targetX][targetY].setX(targetX);
+            chessComponents[targetX][targetY].setY(targetY);
+            chessComponents[sourceX][sourceY] = new EmptySlotComponent(sourceX,sourceY);
+            return true;
+        }
         return false;
     }
 }

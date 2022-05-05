@@ -2,18 +2,9 @@ import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        String str1 = input.next();
-        String str2 = input.next();
-        boolean po1 = str1.charAt(0) == '-' ? false:true;
-        boolean po2 = str2.charAt(0) == '-' ? false:true;
-        int[] b1 = strToInt(str1);
-        int[] b2 = strToInt(str2);
-
-        BigBinary bigBinary1 = new BigBinary(b1, po1);
-        BigBinary bigBinary2 = new BigBinary(b2, po2);
-
-        System.out.println(BigBinary.add(bigBinary1,bigBinary2));
+        char c = 'c';
+        System.out.println(Character.toUpperCase(c));
+        System.out.println(c);
     }
     public static int[] strToInt(String str){
         int a[] = new int[str.length()];

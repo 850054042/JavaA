@@ -1,3 +1,4 @@
+
 public class BigBinary {
     private int[] bits;
     private boolean positive;
@@ -90,18 +91,19 @@ public class BigBinary {
         if (bits.length == 0){
             return "0";
         }else {
-            int k = 0;
-            while (bits[k] != 1 && k < bits.length - 1){
-                k++;
-            }if (k == bits.length - 1){
+            int count = 0;
+            while (bits[count] != 1 && count < bits.length - 1){
+                count++;
+            }
+            if (count == bits.length - 1 && bits[count] == 0){
                 return "0";
             }
             StringBuilder builder = new StringBuilder();
             if (!isPositive()) {
                 builder.append("-");
             }
-            for (int i = 0;i + k < bits.length;i++){
-                builder.append(bits[i+k]);
+            for (int i = 0;i + count < bits.length;i++){
+                builder.append(bits[i+count]);
             }
             return builder.toString();
         }

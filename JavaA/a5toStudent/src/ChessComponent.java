@@ -20,6 +20,33 @@ public abstract class ChessComponent {
     // should design
     public abstract List<ChessboardPoint> canMoveTo();
 
+    public int getX(){
+        return source.getX();
+    }
+
+    public int getY(){
+        return source.getY();
+    }
+
+    public void setX(int x){
+        source.setX(x);
+    }
+
+    public void setY(int y){
+        source.setY(y);
+    }
+
+    public ChessColor getChessColor() {
+        return chessColor;
+    }
+
+    public boolean isOpposite(ChessComponent chessComponent){
+        if(Character.isUpperCase(chessComponent.name)){
+            return Character.isLowerCase(name);
+        }
+        return Character.isUpperCase(name);
+    }
+
     /**
      * should design
      * @return
