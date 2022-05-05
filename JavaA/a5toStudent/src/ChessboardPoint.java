@@ -34,9 +34,16 @@ public class ChessboardPoint {
      */
     @Override
     public String toString() {
-        return null;
+        return String.format("(%d,%d)",x,y);
     }
 
+    public boolean isValidX(int dx){
+        return (x + dx >= 0) & (x + dx <= 7);
+    }
+
+    public boolean isValidY(int dy){
+        return (y + dy >= 0) & (y + dy <= 7);
+    }
 
     /**
      * should design
@@ -46,6 +53,9 @@ public class ChessboardPoint {
      * @return
      */
     public ChessboardPoint offset(int dx, int dy) {
+        if(isValidX(dx) && isValidY(dy)){
+            return new ChessboardPoint(x + dx,y + dy);
+        }
         return null;
     }
 }

@@ -9,6 +9,14 @@ public abstract class ChessComponent {
     //should design
     public ChessComponent(){}
 
+    public ChessComponent(int x,int y){
+        source = new ChessboardPoint(x,y);
+    }
+
+    public void setChessColor(ChessColor chessColor) {
+        this.chessColor = chessColor;
+    }
+
     // should design
     public abstract List<ChessboardPoint> canMoveTo();
 
@@ -18,7 +26,7 @@ public abstract class ChessComponent {
      */
     @Override
     public String toString() {
-        return null;
+        return String.valueOf(this.name);
     }
 
 }
