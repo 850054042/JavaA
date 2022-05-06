@@ -15,8 +15,8 @@ public class QueenChessComponent extends ChessComponent{
             for (int j = 1; j < 8; j++) {
                 double s = Math.sin(initAngle + i * 0.7854);
                 double c = Math.cos(initAngle + i * 0.7854);
-                int sinAngle = Math.abs(s) > 0.1 ? (s > 0 ? (int) Math.floor(s * 1.5) : (int) Math.ceil(s * 1.5)) : 0;
-                int cosAngle = Math.abs(c) > 0.1 ? (c > 0 ? (int) Math.floor(c * 1.5) : (int) Math.ceil(c * 1.5)) : 0;
+                int sinAngle = (int) Math.round(s * 1.4);
+                int cosAngle = (int) Math.round(c * 1.4);
                 int targetX = x + j * cosAngle;
                 int targetY = y + j * sinAngle;
                 if (isValid(targetX) && isValid(targetY)) {
