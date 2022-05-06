@@ -10,13 +10,10 @@ public class QueenChessComponent extends ChessComponent{
         int y = super.getY();
         List<ChessboardPoint> chessboardPoints = new ArrayList<>();
         ChessComponent chess = chessComponents[x][y];
-        int initAngle = 0;
         for(int i = 1;i <= 8;i++) {
             for (int j = 1; j < 8; j++) {
-                double s = Math.sin(initAngle + i * 0.7854);
-                double c = Math.cos(initAngle + i * 0.7854);
-                int sinAngle = (int) Math.round(s * 1.4);
-                int cosAngle = (int) Math.round(c * 1.4);
+                int sinAngle = (int) Math.round(Math.sin(i * 0.7854) * 1.4);
+                int cosAngle = (int) Math.round(Math.cos(i * 0.7854) * 1.4);
                 int targetX = x + j * cosAngle;
                 int targetY = y + j * sinAngle;
                 if (isValid(targetX) && isValid(targetY)) {
