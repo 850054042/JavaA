@@ -83,8 +83,8 @@ public class ConcreteChessGame implements ChessGame{
 
     @Override
     public String getCapturedChess(ChessColor player) {
-        HashMap<Character,Integer> chesses = new HashMap<>();
         char[] chessName = {'K','Q','R','B','N','P'};
+        HashMap<Character,Integer> chesses = new HashMap<>();
         chesses.put('R',2);
         chesses.put('N',2);
         chesses.put('B',2);
