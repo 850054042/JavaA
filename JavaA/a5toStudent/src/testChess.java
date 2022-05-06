@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class testChess {
     public static void main(String[] args) {
@@ -14,6 +15,10 @@ public class testChess {
         board.add("ppp_pppp");
         board.add("rnbqkbnr");
         board.add("w");
+//        Scanner input = new Scanner(System.in);
+//        for(int i = 0;i < 9;i++){
+//            board.add(input.next());
+//        }
         concreteChessGame.loadChessGame(board);
         List<ChessboardPoint> chessboardPoints = concreteChessGame.getCanMovePoints(new ChessboardPoint(7,2));
         for(ChessboardPoint chessboardPoint : chessboardPoints){

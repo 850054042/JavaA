@@ -5,6 +5,13 @@ public abstract class ChessComponent {
     private ChessboardPoint source;
     private ChessColor chessColor;
     protected char name;
+    private ChessComponent[][] chessComponents;
+    public ChessComponent[][] getChessBoard(){
+        return chessComponents;
+    }
+    public void setChessBoard(ChessComponent[][] board){
+        chessComponents = board;
+    }
 
     //should design
     public ChessComponent(){}
