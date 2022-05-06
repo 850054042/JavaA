@@ -13,67 +13,48 @@ public class ConcreteChessGame implements ChessGame{
     public void loadChessGame(List<String> chessboard) {
         for(int i = 0;i < 8;i++){
             for(int j = 0;j < 8;j++){
-                switch (chessboard.get(i).charAt(j)){
+                char c = chessboard.get(i).charAt(j);
+                switch (c){
                     case 'R':
-                        chessComponents[i][j] = new RookChessComponent(i,j);
-                        chessComponents[i][j].setChessColor(ChessColor.BLACK);
-                        break;
                     case 'r':
                         chessComponents[i][j] = new RookChessComponent(i,j);
-                        chessComponents[i][j].setChessColor(ChessColor.WHITE);
                         break;
                     case 'N':
-                        chessComponents[i][j] = new KnightChessComponent(i,j);
-                        chessComponents[i][j].setChessColor(ChessColor.BLACK);
-                        break;
                     case 'n':
                         chessComponents[i][j] = new KnightChessComponent(i,j);
-                        chessComponents[i][j].setChessColor(ChessColor.WHITE);
                         break;
                     case 'B':
-                        chessComponents[i][j] = new BishopChessComponent(i,j);
-                        chessComponents[i][j].setChessColor(ChessColor.BLACK);
-                        break;
                     case 'b':
                         chessComponents[i][j] = new BishopChessComponent(i,j);
-                        chessComponents[i][j].setChessColor(ChessColor.WHITE);
                         break;
                     case 'Q':
-                        chessComponents[i][j] = new QueenChessComponent(i,j);
-                        chessComponents[i][j].setChessColor(ChessColor.BLACK);
-                        break;
                     case 'q':
                         chessComponents[i][j] = new QueenChessComponent(i,j);
-                        chessComponents[i][j].setChessColor(ChessColor.WHITE);
                         break;
                     case 'K':
-                        chessComponents[i][j] = new KingChessComponent(i,j);
-                        chessComponents[i][j].setChessColor(ChessColor.BLACK);
-                        break;
                     case 'k':
                         chessComponents[i][j] = new KingChessComponent(i,j);
-                        chessComponents[i][j].setChessColor(ChessColor.WHITE);
                         break;
                     case 'P':
-                        chessComponents[i][j] = new PawnChessComponent(i,j);
-                        chessComponents[i][j].setChessColor(ChessColor.BLACK);
-                        break;
                     case 'p':
                         chessComponents[i][j] = new PawnChessComponent(i,j);
-                        chessComponents[i][j].setChessColor(ChessColor.WHITE);
                         break;
                     default:
                         chessComponents[i][j] = new EmptySlotComponent(i,j);
-                        chessComponents[i][j].setChessColor(ChessColor.NONE);
                         break;
                 }
-                chessComponents[i][j].name = chessboard.get(i).charAt(j);
+                if(Character.isUpperCase(c))
+                    chessComponents[i][j].setChessColor(ChessColor.BLACK);
+                else
+                    if(Character.isLowerCase(c))
+                        chessComponents[i][j].setChessColor(ChessColor.WHITE);
+                    else
+                        chessComponents[i][j].setChessColor(ChessColor.NONE);
+                chessComponents[i][j].name = c;
             }
         }
         for(int i = 0;i < 8;i++)
-            for(int j = 0;j < 8;j++){
-                chessBoard[i][j] = chessComponents[i][j];
-            }
+            System.arraycopy(chessComponents[i], 0, chessBoard[i], 0, 8);
         currentPlayer = chessboard.get(8).charAt(0) == 'w' ? ChessColor.WHITE:ChessColor.BLACK;
     }
 
