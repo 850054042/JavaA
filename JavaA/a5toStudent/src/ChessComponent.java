@@ -48,10 +48,9 @@ public abstract class ChessComponent {
     }
 
     public boolean isOpposite(ChessComponent chessComponent){
-        if(Character.isUpperCase(chessComponent.name)){
-            return Character.isLowerCase(name);
-        }
-        return Character.isUpperCase(name);
+        if(!chessComponent.chessColor.equals(chessColor))
+            return chessComponent.chessColor.equals(ChessColor.NONE) ? false:true;
+        return false;
     }
 
     /**
