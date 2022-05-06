@@ -1,3 +1,5 @@
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -6,6 +8,7 @@ import java.util.List;
 public class ConcreteChessGame implements ChessGame{
     private ChessComponent[][] chessComponents = new ChessComponent[8][8];
     private ChessColor currentPlayer;
+    public static ChessComponent[][] chessBoard = new ChessComponent[8][8];
     @Override
     public void loadChessGame(List<String> chessboard) {
         for(int i = 0;i < 8;i++){
@@ -67,6 +70,10 @@ public class ConcreteChessGame implements ChessGame{
                 chessComponents[i][j].name = chessboard.get(i).charAt(j);
             }
         }
+        for(int i = 0;i < 8;i++)
+            for(int j = 0;j < 8;j++){
+                chessBoard[i][j] = chessComponents[i][j];
+            }
         currentPlayer = chessboard.get(8).charAt(0) == 'w' ? ChessColor.WHITE:ChessColor.BLACK;
     }
 
@@ -96,6 +103,7 @@ public class ConcreteChessGame implements ChessGame{
     @Override
     public String getCapturedChess(ChessColor player) {
         HashMap<Character,Integer> chesses = new HashMap<>();
+        char[] chessName = {'K','Q','R','B','N','P'};
         chesses.put('R',2);
         chesses.put('N',2);
         chesses.put('B',2);
@@ -119,52 +127,13 @@ public class ConcreteChessGame implements ChessGame{
             }
         }
         StringBuilder sb = new StringBuilder();
-        if(chesses.get('K') != 0) {
-            if (player.equals(ChessColor.BLACK)) {
-                sb.append("K " + chesses.get('K') + "\n");
-            }
-            else{
-                sb.append("k " + chesses.get('K') + "\n");
-            }
-        }
-        if(chesses.get('Q') != 0) {
-            if (player.equals(ChessColor.BLACK)) {
-                sb.append("Q " + chesses.get('Q') + "\n");
-            }
-            else{
-                sb.append("q " + chesses.get('Q') + "\n");
-            }
-        }
-        if(chesses.get('R') != 0) {
-            if (player.equals(ChessColor.BLACK)) {
-                sb.append("R " + chesses.get('R') + "\n");
-            }
-            else{
-                sb.append("r " + chesses.get('R') + "\n");
-            }
-        }
-        if(chesses.get('B') != 0) {
-            if (player.equals(ChessColor.BLACK)) {
-                sb.append("B " + chesses.get('B') + "\n");
-            }
-            else{
-                sb.append("b " + chesses.get('B') + "\n");
-            }
-        }
-        if(chesses.get('N') != 0) {
-            if (player.equals(ChessColor.BLACK)) {
-                sb.append("N " + chesses.get('N') + "\n");
-            }
-            else{
-                sb.append("n " + chesses.get('N') + "\n");
-            }
-        }
-        if(chesses.get('P') != 0) {
-            if (player.equals(ChessColor.BLACK)) {
-                sb.append("P " + chesses.get('P') + "\n");
-            }
-            else{
-                sb.append("p " + chesses.get('P') + "\n");
+        boolean isBlack = player.equals(ChessColor.BLACK) ? true:false;
+        for(int i = 0;i < 6;i++){
+            if(chesses.get(chessName[i]) != 0){
+                char name = chessName[i];
+                if(!isBlack)
+                    name = Character.toLowerCase(name);
+                sb.append(name + " " + chesses.get(chessName[i]) + "\n");
             }
         }
         return sb.toString();
@@ -172,7 +141,6 @@ public class ConcreteChessGame implements ChessGame{
 
     @Override
     public List<ChessboardPoint> getCanMovePoints(ChessboardPoint source) {
-        chessComponents[source.getX()][source.getY()].setChessBoard(chessComponents);
         List<ChessboardPoint> chessboardPoints = chessComponents[source.getX()][source.getY()].canMoveTo();
         chessboardPoints.sort(new Comparator<ChessboardPoint>() {
             @Override

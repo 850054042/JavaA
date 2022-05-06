@@ -6,34 +6,19 @@ public class KnightChessComponent extends ChessComponent{
     public KnightChessComponent(){}
     @Override
     public List<ChessboardPoint> canMoveTo() {
-        ChessComponent[][] chessComponents = super.getChessBoard();
+        ChessComponent[][] chessComponents = ConcreteChessGame.chessBoard;
         int x = super.getX();
         int y = super.getY();
+        ChessComponent chess = chessComponents[x][y];
         List<ChessboardPoint> chessboardPoints = new ArrayList<>();
         for(int i = x - 2;i <= x + 2;i++)
             for(int j = y - 2;j <= y + 2;j++)
                 if((Math.abs(i - x) * Math.abs(j - y) == 2) && isValid(i) && isValid(j))
-                    chessboardPoints.add(new ChessboardPoint(i,j));
-        List<ChessboardPoint> toDelete = new ArrayList<>();
-        ChessComponent chess = chessComponents[x][y];
-        for(ChessboardPoint chessboardPoint : chessboardPoints){
-            int targetX = chessboardPoint.getX();
-            int targetY = chessboardPoint.getY();
-            if(chessComponents[targetX][targetY].name != '_'){
-                if(!chess.isOpposite(chessComponents[targetX][targetY])){
-                    toDelete.add(chessboardPoint);
-                }
-            }
-        }
-        for(ChessboardPoint chessboardPoint : toDelete){
-            chessboardPoints.remove(chessboardPoint);
-        }
+                    if(chess.isOpposite(chessComponents[i][j]) || chessComponents[i][j].getChessColor().equals(ChessColor.NONE))
+                        chessboardPoints.add(new ChessboardPoint(i,j));
         return chessboardPoints;
     }
     public KnightChessComponent(int x,int y){
         super(x,y);
-    }
-    public boolean isValid(int a){
-        return a <= 7 & a >= 0;
     }
 }

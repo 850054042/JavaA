@@ -5,103 +5,34 @@ import java.util.List;
 public class QueenChessComponent extends ChessComponent{
     @Override
     public List<ChessboardPoint> canMoveTo() {
-        ChessComponent[][] chessComponents = super.getChessBoard();
+        ChessComponent[][] chessComponents = ConcreteChessGame.chessBoard;
         int x = super.getX();
         int y = super.getY();
         List<ChessboardPoint> chessboardPoints = new ArrayList<>();
-        for(int i = 0;i < 8;i++){
-            if(x + i < 8 && y + i < 8){
-                chessboardPoints.add(new ChessboardPoint(x + i,y + i));
-            }
-            else{
-                break;
-            }
-        }
-        for(int i = 0;i < 8;i++){
-            if(x + i < 8 && y - i >= 0){
-                chessboardPoints.add(new ChessboardPoint(x + i,y - i));
-            }
-            else{
-                break;
-            }
-        }
-        for(int i = 0;i < 8;i++){
-            if(x - i >= 0 && y + i < 8){
-                chessboardPoints.add(new ChessboardPoint(x - i,y + i));
-            }
-            else{
-                break;
-            }
-        }
-        for(int i = 0;i < 8;i++){
-            if(x - i >= 0 && y - i >= 0){
-                chessboardPoints.add(new ChessboardPoint(x - i,y - i));
-            }
-            else{
-                break;
-            }
-        }
-        for(int i = 0;i < 8;i++){
-            if(x + i < 8){
-                chessboardPoints.add(new ChessboardPoint(x + i,y));
-            }
-            else{
-                break;
-            }
-        }
-        for(int i = 0;i < 8;i++){
-            if(x - i >= 0){
-                chessboardPoints.add(new ChessboardPoint(x - i,y));
-            }
-            else{
-                break;
-            }
-        }
-        for(int i = 0;i < 8;i++){
-            if(y + i < 8){
-                chessboardPoints.add(new ChessboardPoint(x,y + i));
-            }
-            else{
-                break;
-            }
-        }
-        for(int i = 0;i < 8;i++){
-            if(y - i >= 0){
-                chessboardPoints.add(new ChessboardPoint(x,y - i));
-            }
-            else{
-                break;
-            }
-        }
-        List<ChessboardPoint> toDelete = new ArrayList<>();
         ChessComponent chess = chessComponents[x][y];
-        boolean blocked = false;
-        for(ChessboardPoint chessboardPoint : chessboardPoints){
-            int targetX = chessboardPoint.getX();
-            int targetY = chessboardPoint.getY();
-            if(targetX == x && targetY == y){
-                blocked = false;
-                toDelete.add(chessboardPoint);
-                continue;
-            }
-            if(blocked == true){
-                toDelete.add(chessboardPoint);
-                continue;
-            }
-            if(chessComponents[targetX][targetY].name != '_'){
-                if(chess.isOpposite(chessComponents[targetX][targetY])){
-                    blocked = true;
-                }
-                else{
-                    blocked = true;
-                    toDelete.add(chessboardPoint);
+        int initAngle = 0;
+        for(int i = 1;i <= 8;i++) {
+            for (int j = 1; j < 8; j++) {
+                double s = Math.sin(initAngle + i * 0.7854);
+                double c = Math.cos(initAngle + i * 0.7854);
+                int sinAngle = Math.abs(s) > 0.1 ? (s > 0 ? (int) Math.floor(s * 1.5) : (int) Math.ceil(s * 1.5)) : 0;
+                int cosAngle = Math.abs(c) > 0.1 ? (c > 0 ? (int) Math.floor(c * 1.5) : (int) Math.ceil(c * 1.5)) : 0;
+                int targetX = x + j * cosAngle;
+                int targetY = y + j * sinAngle;
+                if (isValid(targetX) && isValid(targetY)) {
+                    if (chessComponents[targetX][targetY].name != '_') {
+                        if (chess.isOpposite(chessComponents[targetX][targetY])) {
+                            chessboardPoints.add(new ChessboardPoint(targetX, targetY));
+                        }
+                        break;
+                    } else {
+                        chessboardPoints.add(new ChessboardPoint(targetX, targetY));
+                    }
+                } else {
+                    break;
                 }
             }
         }
-        for(ChessboardPoint chessboardPoint : toDelete){
-            chessboardPoints.remove(chessboardPoint);
-        }
-
         return chessboardPoints;
     }
 

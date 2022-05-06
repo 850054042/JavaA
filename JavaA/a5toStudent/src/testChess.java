@@ -20,7 +20,7 @@ public class testChess {
 //            board.add(input.next());
 //        }
         concreteChessGame.loadChessGame(board);
-        List<ChessboardPoint> chessboardPoints = concreteChessGame.getCanMovePoints(new ChessboardPoint(7,2));
+        List<ChessboardPoint> chessboardPoints = concreteChessGame.getCanMovePoints(new ChessboardPoint(0,3));
         for(ChessboardPoint chessboardPoint : chessboardPoints){
             System.out.println(chessboardPoint);
         }

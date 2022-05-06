@@ -5,13 +5,6 @@ public abstract class ChessComponent {
     private ChessboardPoint source;
     private ChessColor chessColor;
     protected char name;
-    private ChessComponent[][] chessComponents;
-    public ChessComponent[][] getChessBoard(){
-        return chessComponents;
-    }
-    public void setChessBoard(ChessComponent[][] board){
-        chessComponents = board;
-    }
 
     //should design
     public ChessComponent(){}
@@ -51,6 +44,10 @@ public abstract class ChessComponent {
         if(!chessComponent.chessColor.equals(chessColor))
             return chessComponent.chessColor.equals(ChessColor.NONE) ? false:true;
         return false;
+    }
+
+    public boolean isValid(int pos){
+        return pos >= 0 & pos < 8;
     }
 
     /**
