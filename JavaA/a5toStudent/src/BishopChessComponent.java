@@ -69,12 +69,6 @@ public class BishopChessComponent extends ChessComponent{
         for(ChessboardPoint chessboardPoint : toDelete){
             chessboardPoints.remove(chessboardPoint);
         }
-        chessboardPoints.sort(new Comparator<ChessboardPoint>() {
-            @Override
-            public int compare(ChessboardPoint o1, ChessboardPoint o2) {
-                return o1.getX() == o2.getX() ? new Integer(o1.getY()).compareTo(new Integer(o2.getY())):new Integer(o1.getX()).compareTo(new Integer(o2.getX()));
-            }
-        });
         return chessboardPoints;
     }
     public BishopChessComponent(int x,int y){

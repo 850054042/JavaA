@@ -173,7 +173,14 @@ public class ConcreteChessGame implements ChessGame{
     @Override
     public List<ChessboardPoint> getCanMovePoints(ChessboardPoint source) {
         chessComponents[source.getX()][source.getY()].setChessBoard(chessComponents);
-        return chessComponents[source.getX()][source.getY()].canMoveTo();
+        List<ChessboardPoint> chessboardPoints = chessComponents[source.getX()][source.getY()].canMoveTo();
+        chessboardPoints.sort(new Comparator<ChessboardPoint>() {
+            @Override
+            public int compare(ChessboardPoint o1, ChessboardPoint o2) {
+                return o1.getX() == o2.getX() ? new Integer(o1.getY()).compareTo(new Integer(o2.getY())):new Integer(o1.getX()).compareTo(new Integer(o2.getX()));
+            }
+        });
+        return chessboardPoints;
     }
 
     @Override
