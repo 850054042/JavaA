@@ -1,4 +1,4 @@
-public class Shape {
+public abstract class Shape {
     private double x;
     private double y;
     private ShapeColor color = ShapeColor.GRAY;
@@ -39,6 +39,10 @@ public class Shape {
     public ShapeColor getColor() {
         return color;
     }
+
+    public void checkColor(){}
+
+    public abstract void draw();
 
     @Override
     public String toString() {

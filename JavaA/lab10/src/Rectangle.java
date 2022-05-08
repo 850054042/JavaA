@@ -1,4 +1,6 @@
-public class Rectangle extends Shape {
+import java.awt.*;
+
+public class Rectangle extends Shape implements Comparable<Rectangle>, ColorDraw {
     private double width;
     private double height;
 
@@ -57,4 +59,23 @@ public class Rectangle extends Shape {
         StdDraw.filledRectangle(super.getX(), super.getY(), this.width / 2, this.height / 2);
     }
 
+    @Override
+    public int compareTo(Rectangle o) {
+        double a1 = width * height;
+        double a2 = o.width * o.height;
+        return a1 == a2 ? (super.getX() < o.getX() ? 1:(super.getX() == o.getX() ? 0:-1)):(a1 < a2 ? 1:(a1 == a2 ? 0:-1));
+    }
+
+    @Override
+    public void customizedColor(ColorScheme colorScheme, int index) {
+        Color[] colorList = colorScheme.getColorScheme();
+        if (index < 0){
+            index = 0;
+        }
+        if (index >= colorList.length){
+            index = index % colorList.length;
+        }
+        StdDraw.setPenColor(colorList[index]);
+        StdDraw.filledRectangle(super.getX(), super.getY(), this.width / 2, this.height / 2);
+    }
 }

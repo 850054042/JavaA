@@ -5,7 +5,9 @@ import java.util.List;
 public class RookChessComponent extends ChessComponent{
     @Override
     public List<ChessboardPoint> canMoveTo() {
-        ChessComponent[][] chessComponents = ConcreteChessGame.chessBoard;
+        ChessComponent chessComponents[][] = new ChessComponent[8][8];
+        for(int i = 0;i < 8;i++)
+            System.arraycopy(ConcreteChessGame.chessBoard[i], 0, chessComponents[i], 0, 8);
         int x = super.getX();
         int y = super.getY();
         List<ChessboardPoint> chessboardPoints = new ArrayList<>();

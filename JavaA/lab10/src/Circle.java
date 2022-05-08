@@ -1,4 +1,6 @@
-public class Circle extends Shape {
+import java.awt.*;
+
+public class Circle extends Shape implements Comparable<Circle>, ColorDraw {
     private double radius;
     static final int DEFAULT_RADIUS = 5;
 
@@ -51,6 +53,29 @@ public class Circle extends Shape {
 
     public void draw() {
         StdDraw.setPenColor(super.getColor().getColor());
+        StdDraw.filledCircle(super.getX(), super.getY(), radius);
+    }
+
+    @Override
+    public int compareTo(Circle o) {
+        if(this.radius < o.radius){
+            return 1;
+        }else if(this.radius > o.radius){
+            return -1;
+        }
+        return 0;
+    }
+
+    @Override
+    public void customizedColor(ColorScheme colorScheme, int index) {
+        Color[] colorList = colorScheme.getColorScheme();
+        if (index < 0){
+            index = 0;
+        }
+        if (index >= colorList.length){
+            index = index % colorList.length;
+        }
+        StdDraw.setPenColor(colorList[index]);
         StdDraw.filledCircle(super.getX(), super.getY(), radius);
     }
 }
